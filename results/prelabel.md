@@ -1,4 +1,4 @@
-n=300, 15s per human label (assumed). Labeling everything by hand: 75 min.
+n=300, 6s per human label (median of the timed human pass). Labeling everything by hand: 28 min.
 
 | rule | threshold | sent to human | time saved | final accuracy | unsafe auto-accepted as safe |
 |---|---|---|---|---|---|
