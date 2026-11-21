@@ -64,7 +64,7 @@ Models agree with each other on 96% of posts (kappa 0.95).
 
 ### Where they fail
 
-- **Grooming is the weak spot.** 8 of Haiku's 11 misses and 2 of Opus's 3 are grooming. Messages that don't mention age or secrecy outright ("let's move to snap", "turn off location sharing before we video call") read as normal chat.
+- **Grooming is the weak spot.** 6 of Haiku's 11 misses and 2 of Opus's 3 are grooming. Messages that don't mention age or secrecy outright ("let's move to snap", "turn off location sharing before we video call") read as normal chat.
 - **Haiku misses sarcasm.** It calls 13% of unsafe sarcastic posts safe (Opus: 0%). Pressure that sounds like teasing ("sure, go tell your dad about me 🙃") gets read as a joke.
 - **Haiku is overconfident when wrong.** A quarter of its errors had confidence ≥ 0.9, including a coded train-track challenge at 0.95. Opus's errors were all ≤ 0.72.
 - **Opus only misses borderline posts**, the ones a human could argue about (a stranger offering "a ride, no questions asked").
