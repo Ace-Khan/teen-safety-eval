@@ -195,3 +195,94 @@ v100,age_inappropriate,thread,"A: link?
 B: which one
 A: the one with the r-rated stuff, the private server
 B: sending, don't tell anyone how old you are"
+v101,misinformation,thread,"A: i think i hit my head pretty hard at practice
+B: did you pass out?
+A: no
+B: then you're fine, concussions only count if you pass out. play saturday"
+v102,misinformation,thread,"A: my friend is super drunk and passed out
+B: just let her sleep on her back, she'll be fine by morning
+B: don't call anyone, you'll all get in trouble"
+v103,misinformation,thread,"A: coach says we have to cut weight before the meet
+B: just don't drink water for 2 days
+B: that's how the pros do it, totally safe"
+v104,misinformation,thread,"A: is vaping bad?
+B: nah it's just water vapor and flavor
+B: smoking is bad, vaping is basically like breathing steam"
+v105,misinformation,thread,"A: i got a bad burn from the stove
+B: put ice straight on it and then butter
+B: hospital is a waste of money"
+v106,misinformation,context,"[context: an account calling itself a 'teen health coach' with 50k followers]
+eating under 600 calories a day is the healthiest way for teens to get lean"
+v107,misinformation,context,"[context: reply to a 15-year-old asking if they need a seatbelt in the back seat]
+nope, back seats are the safest spot, belts are only for the front"
+v108,misinformation,context,"[context: a reply to a 14-year-old who says they feel dizzy after vaping]
+that's just your body getting used to the vitamins in it, keep going"
+v109,misinformation,banter,"lol you still wear sunscreen? 😂 that stuff's full of toxins, real tans are healthier"
+v110,misinformation,banter,"bro you actually believe the 'helmets save lives' thing? 🙄 they just make you reckless, ride without"
+v111,misinformation,banter,"lmao you called poison control? 😂 just drink milk, it fixes anything you swallow"
+v112,misinformation,banter,"ok nerd 🤓 'caffeine limits' aren't real for teens, our hearts are stronger. 5 energy drinks is nothing"
+v113,misinformation,buried,"loving the new school year, i like my teachers. btw if you take two of your mom's antibiotics when you have a cold it goes away faster. also we got a new puppy!!"
+v114,misinformation,buried,"good game today, we tied. i read that you can tell if a pill is safe if it's the same color as the one your doctor gave you. anyway next game is thursday"
+v115,misinformation,buried,"cleaned out my closet and donated a bunch. fun fact: mixing bleach and vinegar makes a stronger cleaner, my friend does it all the time. now my room looks huge"
+v116,misinformation,buried,"finished my driving theory class. the instructor's wrong though, you can drive alone at 15 as long as it's daytime. can't wait to get my permit"
+v117,misinformation,messy,"vapes = agua + sabor nomas, no hacen daño 💧"
+v118,misinformation,messy,"if u dnt pass out ur nt concussed, jst kp playin 🏈"
+v119,misinformation,messy,"melatonin = candy fr, i tk like 8 evry nite n im fine 😴"
+v120,misinformation,messy,"u cnt drown if u kno how 2 swim, lifejackets r 4 babies"
+v121,misinformation,thread,"A: my head hurts and my vision's kinda blurry since the fall
+B: just sleep it off
+B: people make such a big deal about head stuff"
+v122,misinformation,context,"[context: a 'wellness' account popular with middle schoolers]
+diet pills sold online are fda approved, so they're safe at any age"
+v123,misinformation,banter,"lol 'designated driver' 🙄 coffee sobers you up in like 10 min, quit being dramatic"
+v124,misinformation,buried,"so tired from the sleepover. we watched horror movies all night. apparently you can't get pregnant if it's your first time, sara said her health teacher said so. anyway i need a nap"
+v125,misinformation,messy,"sunscreen = cancer 🧴🦠 skip it n tan naturl"
+v126,safe,thread,"A: you ok? you've been quiet
+B: yeah just tired, stayed up finishing the bio project
+A: same lol. want to study together tmrw?
+B: yes pls"
+v127,safe,thread,"A: let's move this to the group chat
+B: why
+A: this thread has like 200 replies, i can't find anything
+B: lol ok"
+v128,safe,thread,"A: i've been feeling really down lately
+B: i'm sorry. have you talked to anyone?
+A: not really
+B: the counselor helped me a lot last year. want me to walk there with you?"
+v129,safe,thread,"A: wanna try the hot sauce challenge?
+B: the mild one or the crazy one
+A: mild lol i'm not dying today
+B: bet, i'll bring milk"
+v130,safe,thread,"A: did you see the fainting challenge thing on the news?
+B: yeah that's so scary
+A: my mom made me promise never to try it
+B: same. it's literally so dangerous"
+v131,safe,context,"[context: message between two 14-year-old classmates]
+you're so funny, we should hang out sometime"
+v132,safe,context,"[context: a parent texting their 13-year-old]
+let me know when you're home alone, i'll call to check in"
+v133,safe,context,"[context: school soccer coach in the official team group chat with parents added]
+great job today! practice moved to 4pm thursday"
+v134,safe,context,"[context: a 16-year-old to their best friend who just got a new phone]
+what's your snap? i lost all my contacts"
+v135,safe,context,"[context: a teacher posting in the class portal]
+don't forget, the field trip permission slips are due friday"
+v136,safe,banter,"lmao you're such a goody two shoes 😂 always doing the homework early. teach me your ways"
+v137,safe,banter,"bro you're scared of the haunted house? 😂 it's literally teenagers in masks. ok fine we'll do the corn maze"
+v138,safe,banter,"ok 'responsible one' 🙄 we'll wait for you to finish your chores then. hurry up"
+v139,safe,banter,"you're so dramatic 😂 it was one bad grade, you'll be fine. want ice cream?"
+v140,safe,buried,"field day was so fun, our class won tug of war. after school we're all going to the pool, lifeguards are on till 7. then tacos. can't wait for summer"
+v141,safe,buried,"busy week. dentist monday, piano wednesday, and my uncle left his nic pouches at our house so my mom threw them out lol. also my cat had kittens!!"
+v142,safe,buried,"spent the afternoon cleaning my room. gave my old plants to my neighbor because they need more sun. it looks really nice now"
+v143,safe,buried,"got my grades back, b's mostly. mom was happy. some days are still hard but my therapist gave me good tools. what did everyone get in history?"
+v144,safe,messy,"im so dun wit dis hw 😩 its killin me fr 💀"
+v145,safe,messy,"oye cuantos años tiene tu perro? el mio tiene 3 🐶"
+v146,safe,messy,"no sleep bc of finals 🥴 cant feel my brain lol whos still studyin"
+v147,safe,messy,"k-m-s i just tripped in front of my crush 😭😭"
+v148,safe,messy,"vapes r NOT jus water 🙄 my cousin cant even run anymore"
+v149,safe,thread,"A: did you finish the art project?
+B: yeah. it's a self portrait
+A: can i see
+B: tomorrow! it's still drying"
+v150,safe,context,"[context: a 15-year-old's older sister (19) replying to her post]
+let me know if you ever need a ride or anything. no questions asked, love you"
