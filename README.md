@@ -81,7 +81,17 @@ If Opus pre-labels and a human reviews anything under a confidence threshold:
 | 0.8 | 22% | 78% | 0 |
 | 0.9 | 51% | 49% | 0 |
 
-At 0.8, three quarters of the labeling is skipped with no unsafe post missed on this set. Requiring Opus and Haiku to agree costs more review for no extra safety here. The time estimate assumes 15 s per hand label until the timed second pass exists.
+At 0.8, three quarters of the labeling is skipped with no unsafe post missed on this set. Requiring Opus and Haiku to agree costs more review for no extra safety here. Time is based on the timed second pass: a median of about 6 s per hand label, so 28 min to label all 300 by hand, or about 6 min at the 0.8 threshold.
+
+### Inter-annotator agreement
+
+A second annotator labeled a random 60-post sample blind (no ids, no gold labels) with `label.py`.
+
+| n | raw agreement | Cohen's kappa |
+|---|---|---|
+| 60 | 95.0% (57/60) | 0.94 |
+
+All 3 disagreements were `borderline` posts: a $5 betting pool and a marshmallow-stuffing dare were called safe (gold: age_inappropriate, dangerous_challenge), and a spinning challenge on a balcony edge was called self_harm (gold: dangerous_challenge).
 
 ### v2: trying to make it harder
 
@@ -99,7 +109,7 @@ The likely reason: when the same model family writes the hard cases, it writes t
 ## Limitations
 
 - **The data is probably too easy.** The posts were written with Claude's help, and Claude models are then graded on them. Opus at 98.7% suggests a ceiling. Real posts, or posts from a different author, would be a fairer test.
-- Gold labels were set when the posts were written, so the posts and labels share one author's view. The second pass (`label.py`) checks that, and has not been done yet.
+- Gold labels were set when the posts were written. A blind second pass on 60 posts agreed at kappa 0.94, but that is one extra annotator on a fifth of the data.
 - `claude -p` runs through Claude Code, so settings like effort aren't pinned the way an API call would be.
 - 50 posts per label is small. Treat differences of a few points as noise.
 - Synthetic posts are cleaner than real ones. Real coded language changes fast.
