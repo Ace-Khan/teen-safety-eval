@@ -10,6 +10,7 @@ All data is synthetic. No real teen content and nothing graphic.
 |---|---|
 | `guide/labeling_guide.md` | labeling standard: 6 labels, numbered rules, edge cases |
 | `data/posts.csv` | 300 synthetic posts, 50 per label, each tagged with a `trick` (plain, coded, sarcasm, borderline, hard_negative) |
+| `data/posts_v2.csv` | 150 "hard" posts, 25 per label: threads, context lines, teasing pressure, buried sentences, messy text |
 | `data/annotator_b.csv` | second-pass labels on a 60-post sample (created by `label.py`) |
 | `src/classify.py` | runs a Claude model as a classifier (label, cited rule, confidence) |
 | `src/metrics.py` | precision, recall and false-negative rate for each label |
@@ -81,6 +82,19 @@ If Opus pre-labels and a human reviews anything under a confidence threshold:
 | 0.9 | 51% | 49% | 0 |
 
 At 0.8, three quarters of the labeling is skipped with no unsafe post missed on this set. Requiring Opus and Haiku to agree costs more review for no extra safety here. The time estimate assumes 15 s per hand label until the timed second pass exists.
+
+### v2: trying to make it harder
+
+v2 targets the v1 weak spots: grooming spread across a short thread, pressure hidden in teasing, a `[context: ...]` line that decides the label (same words, peer vs adult stranger), one risky sentence buried in a normal post, and typos and Spanish. Run with `--data posts_v2`.
+
+| model | v1 accuracy | v2 accuracy | v2 unsafe called safe |
+|---|---|---|---|
+| Claude Opus 5.5 | 98.7% | 99.3% | 0 of 125 |
+| Claude Haiku 5.5 | 96.0% | 96.7% | 2 of 125 |
+
+**It didn't get harder.** Opus missed nothing unsafe, and its one error was a post that arguably fits grooming better than its gold label. Haiku's two misses were a vague goodbye thread ("i won't be around friday... somewhere better") and a messy train-track invite it labeled safe at 0.97 confidence. Grooming, Haiku's worst label in v1, went to perfect recall once the risk was spread over a thread.
+
+The likely reason: when the same model family writes the hard cases, it writes them so the right label can be defended, which means the signal is always there to find. Making this benchmark harder probably needs posts written by people or another model family, or keeping only the posts a model actually gets wrong.
 
 ## Limitations
 
