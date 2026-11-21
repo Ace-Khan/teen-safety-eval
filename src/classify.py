@@ -5,6 +5,7 @@
 """
 import argparse
 import json
+import os
 import subprocess
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
@@ -40,8 +41,10 @@ def classify_cli(model, text):
            "--no-session-persistence", "--output-format", "json",
            "--system-prompt", INSTRUCTIONS.format(guide=guide_text()),
            "--json-schema", json.dumps(Judgment.model_json_schema())]
+    # drop CLAUDE_*/ANTHROPIC_* vars so it uses your own login, not a parent session's
+    env = {k: v for k, v in os.environ.items() if not k.startswith(("CLAUDE", "ANTHROPIC"))}
     proc = subprocess.run(cmd, input=f"Post:\n{text}", capture_output=True, text=True,
-                          cwd=EMPTY_DIR, timeout=300)
+                          cwd=EMPTY_DIR, env=env, timeout=300)
     out = json.loads(proc.stdout)
     if out.get("is_error"):
         raise RuntimeError(out.get("result"))
