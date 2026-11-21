@@ -14,7 +14,7 @@ from typing import Literal
 import anthropic
 from pydantic import BaseModel, Field
 
-from common import RESULTS, guide_text, load_posts, read_jsonl
+from common import RESULTS, guide_text, load_posts, preds_path, read_jsonl
 
 INSTRUCTIONS = """You are a content moderator for a social app used by teens (13-17).
 Label the post using ONLY the labeling guide below. Cite the single rule ID that decides
@@ -75,13 +75,14 @@ def main():
     ap.add_argument("--model", default="claude-opus-5-5")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--backend", choices=["api", "cli"], default="api")
+    ap.add_argument("--data", default="posts", help="csv name in data/, e.g. posts_v2")
     args = ap.parse_args()
     judge = classify_cli if args.backend == "cli" else classify
 
     RESULTS.mkdir(exist_ok=True)
-    out = RESULTS / f"preds_{args.model}.jsonl"
+    out = preds_path(args.model, args.data)
     done = {r["id"] for r in read_jsonl(out)}
-    todo = [p for p in load_posts() if p["id"] not in done]
+    todo = [p for p in load_posts(args.data) if p["id"] not in done]
     print(f"{len(todo)} posts to label with {args.model}")
 
     def run(post):

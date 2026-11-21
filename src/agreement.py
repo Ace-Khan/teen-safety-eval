@@ -7,7 +7,7 @@ import argparse
 import csv
 from collections import Counter
 
-from common import DATA, RESULTS, load_posts, read_jsonl
+from common import DATA, load_posts, preds_path, read_jsonl
 
 
 def kappa(a, b):
@@ -21,11 +21,12 @@ def kappa(a, b):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", nargs=2)
+    ap.add_argument("--data", default="posts")
     args = ap.parse_args()
 
     if args.models:
-        x = {r["id"]: r["label"] for r in read_jsonl(RESULTS / f"preds_{args.models[0]}.jsonl")}
-        y = {r["id"]: r["label"] for r in read_jsonl(RESULTS / f"preds_{args.models[1]}.jsonl")}
+        x = {r["id"]: r["label"] for r in read_jsonl(preds_path(args.models[0], args.data))}
+        y = {r["id"]: r["label"] for r in read_jsonl(preds_path(args.models[1], args.data))}
         name = " vs ".join(args.models)
     else:
         x = {p["id"]: p["label"] for p in load_posts()}

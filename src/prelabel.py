@@ -10,11 +10,11 @@ slip through as auto-accepted "safe".
 
     python src/prelabel.py claude-opus-5-5 claude-haiku-5-5
 """
+import argparse
 import csv
-import sys
 from statistics import median
 
-from common import DATA, RESULTS, UNSAFE, load_posts, read_jsonl
+from common import DATA, UNSAFE, load_posts, preds_path, read_jsonl
 
 DEFAULT_SECONDS = 15.0  # used until a timed human pass exists
 THRESHOLDS = [0.5, 0.7, 0.8, 0.9, 0.95]
@@ -43,10 +43,10 @@ def simulate(posts, accept):
     return reviewed, correct / len(posts), leaked
 
 
-def main(primary, second=None):
-    posts = load_posts()
-    a = {r["id"]: r for r in read_jsonl(RESULTS / f"preds_{primary}.jsonl")}
-    b = {r["id"]: r for r in read_jsonl(RESULTS / f"preds_{second}.jsonl")} if second else {}
+def main(primary, second=None, data="posts"):
+    posts = load_posts(data)
+    a = {r["id"]: r for r in read_jsonl(preds_path(primary, data))}
+    b = {r["id"]: r for r in read_jsonl(preds_path(second, data))} if second else {}
     posts = [p for p in posts if p["id"] in a and (not b or p["id"] in b)]
     n = len(posts)
     sec, src = seconds_per_item()
@@ -68,4 +68,9 @@ def main(primary, second=None):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:3])
+    ap = argparse.ArgumentParser()
+    ap.add_argument("primary")
+    ap.add_argument("second", nargs="?")
+    ap.add_argument("--data", default="posts")
+    args = ap.parse_args()
+    main(args.primary, args.second, args.data)

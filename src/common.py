@@ -12,9 +12,15 @@ LABELS = ["self_harm", "grooming", "dangerous_challenge", "age_inappropriate", "
 UNSAFE = LABELS[:-1]
 
 
-def load_posts():
-    with open(DATA / "posts.csv") as f:
+def load_posts(data="posts"):
+    with open(DATA / f"{data}.csv") as f:
         return list(csv.DictReader(f))
+
+
+def preds_path(model, data="posts"):
+    # v1 files keep their original names
+    suffix = "" if data == "posts" else f"_{data}"
+    return RESULTS / f"preds_{model}{suffix}.jsonl"
 
 
 def guide_text():

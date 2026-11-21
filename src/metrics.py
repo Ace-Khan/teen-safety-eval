@@ -2,14 +2,14 @@
 
     python src/metrics.py claude-opus-5-5
 """
-import sys
+import argparse
 
-from common import LABELS, RESULTS, UNSAFE, load_posts, read_jsonl
+from common import LABELS, UNSAFE, load_posts, preds_path, read_jsonl
 
 
-def load_pairs(model):
-    gold = {p["id"]: p["label"] for p in load_posts()}
-    preds = {r["id"]: r for r in read_jsonl(RESULTS / f"preds_{model}.jsonl")}
+def load_pairs(model, data):
+    gold = {p["id"]: p["label"] for p in load_posts(data)}
+    preds = {r["id"]: r for r in read_jsonl(preds_path(model, data))}
     return [(gold[i], preds[i]["label"]) for i in gold if i in preds]
 
 
@@ -37,8 +37,8 @@ def summary(pairs):
             "safe_flagged": overflag, "refusals": refusals}
 
 
-def report(model):
-    pairs = load_pairs(model)
+def report(model, data="posts"):
+    pairs = load_pairs(model, data)
     s = summary(pairs)
     lines = [f"### {model}", "",
              f"n={s['n']}, accuracy {s['accuracy']:.1%}, unsafe called safe {s['unsafe_called_safe']:.1%}, "
@@ -50,5 +50,9 @@ def report(model):
 
 
 if __name__ == "__main__":
-    for m in sys.argv[1:]:
-        print(report(m))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("models", nargs="+")
+    ap.add_argument("--data", default="posts")
+    args = ap.parse_args()
+    for m in args.models:
+        print(report(m, args.data))

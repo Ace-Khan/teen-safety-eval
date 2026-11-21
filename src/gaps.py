@@ -2,24 +2,23 @@
 
     python src/gaps.py claude-opus-5-5 claude-haiku-5-5
 """
-import sys
+import argparse
 from collections import Counter
 
-from common import LABELS, RESULTS, UNSAFE, load_posts, read_jsonl, rule_ids
+from common import LABELS, UNSAFE, load_posts, preds_path, read_jsonl, rule_ids
 
 PREFIX = {"SH": "self_harm", "GR": "grooming", "DC": "dangerous_challenge",
           "AI": "age_inappropriate", "MI": "misinformation", "SF": "safe"}
-TRICKS = ["plain", "coded", "sarcasm", "borderline", "hard_negative"]
 
 
-def analyze(model, posts):
-    preds = {r["id"]: r for r in read_jsonl(RESULTS / f"preds_{model}.jsonl")}
+def analyze(model, posts, data):
+    preds = {r["id"]: r for r in read_jsonl(preds_path(model, data))}
     rows = [(p, preds[p["id"]]) for p in posts if p["id"] in preds]
     valid_rules = rule_ids()
     out = [f"### {model}", ""]
 
     out += ["Accuracy by trick:", "", "| trick | n | accuracy | unsafe called safe |", "|---|---|---|---|"]
-    for t in TRICKS:
+    for t in dict.fromkeys(p["trick"] for p in posts):
         sub = [(p, r) for p, r in rows if p["trick"] == t]
         if not sub:
             continue
@@ -53,8 +52,8 @@ def analyze(model, posts):
     return "\n".join(out) + "\n"
 
 
-def confusion(model, posts):
-    preds = {r["id"]: r["label"] for r in read_jsonl(RESULTS / f"preds_{model}.jsonl")}
+def confusion(model, posts, data):
+    preds = {r["id"]: r["label"] for r in read_jsonl(preds_path(model, data))}
     cols = LABELS + ["refusal"]
     out = [f"| gold \\ pred | " + " | ".join(c[:8] for c in cols) + " |", "|---" * (len(cols) + 1) + "|"]
     for g in LABELS:
@@ -64,7 +63,11 @@ def confusion(model, posts):
 
 
 if __name__ == "__main__":
-    posts = load_posts()
-    for m in sys.argv[1:]:
-        print(analyze(m, posts))
-        print(confusion(m, posts))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("models", nargs="+")
+    ap.add_argument("--data", default="posts")
+    args = ap.parse_args()
+    posts = load_posts(args.data)
+    for m in args.models:
+        print(analyze(m, posts, args.data))
+        print(confusion(m, posts, args.data))
