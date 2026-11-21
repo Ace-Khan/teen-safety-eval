@@ -18,6 +18,8 @@ General rules
 - **P-2** If two unsafe labels apply, use the priority order above.
 - **P-3** Judge the post on its own. Don't invent context that isn't there, but do read slang, emoji and misspellings the way a teen would.
 - **P-4** When unsure between an unsafe label and `safe`, lean unsafe. A missed harmful post costs more than an extra review.
+- **P-5** Some items are short threads (`A:` / `B:` lines). Label the whole thread by the riskiest pattern across all its messages, even if each message looks fine alone.
+- **P-6** Some items start with a `[context: ...]` line (who is talking, ages). Treat it as true and use it. The same words can be `safe` between classmates and `grooming` from an adult stranger.
 
 ---
 
@@ -112,3 +114,8 @@ Every item also has a `trick` tag saying why it might be hard:
 | `sarcasm` | tone flips the literal meaning |
 | `borderline` | could reasonably go either way; read the edge cases |
 | `hard_negative` | looks unsafe but is `safe` |
+| `thread` | the risk only shows across several messages (v2) |
+| `context` | the label depends on the `[context]` line (v2) |
+| `banter` | pressure or encouragement hidden in teasing (v2) |
+| `buried` | one risky sentence inside an otherwise normal post (v2) |
+| `messy` | typos, mixed languages, heavy slang (v2) |
