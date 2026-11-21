@@ -91,7 +91,7 @@ A second annotator labeled a random 60-post sample blind (no ids, no gold labels
 |---|---|---|
 | 60 | 95.0% (57/60) | 0.94 |
 
-All 3 disagreements were `borderline` posts: a $5 betting pool and a marshmallow-stuffing dare were called safe (gold: age_inappropriate, dangerous_challenge), and a spinning challenge on a balcony edge was called self_harm (gold: dangerous_challenge).
+All 3 disagreements were `borderline` posts: a $5 betting pool and a marshmallow-stuffing dare were called safe (gold: age_inappropriate, dangerous_challenge), and a spinning challenge on a balcony edge was called self_harm (gold: dangerous_challenge). On review these were second-pass slips, not gold errors, so the gold labels stand.
 
 ### v2: trying to make it harder
 
