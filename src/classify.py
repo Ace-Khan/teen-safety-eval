@@ -1,9 +1,12 @@
 """Run an LLM over every post and save its label, cited rule and confidence.
 
     python src/classify.py --model claude-haiku-5-5
+    python src/classify.py --model claude-haiku-5-5 --backend cli   # uses `claude -p`, no API credits
 """
 import argparse
 import json
+import subprocess
+import tempfile
 from concurrent.futures import ThreadPoolExecutor
 from typing import Literal
 
@@ -29,6 +32,21 @@ class Judgment(BaseModel):
 
 
 client = anthropic.Anthropic()
+EMPTY_DIR = tempfile.mkdtemp()  # cli runs here so it can't see the repo (and the answers)
+
+
+def classify_cli(model, text):
+    cmd = ["claude", "-p", "--model", model, "--tools", "", "--strict-mcp-config",
+           "--no-session-persistence", "--output-format", "json",
+           "--system-prompt", INSTRUCTIONS.format(guide=guide_text()),
+           "--json-schema", json.dumps(Judgment.model_json_schema())]
+    proc = subprocess.run(cmd, input=f"Post:\n{text}", capture_output=True, text=True,
+                          cwd=EMPTY_DIR, timeout=300)
+    out = json.loads(proc.stdout)
+    if out.get("is_error"):
+        raise RuntimeError(out.get("result"))
+    data = out.get("structured_output") or json.loads(out["result"])
+    return Judgment(**data).model_dump()
 
 
 def classify(model, text):
@@ -53,7 +71,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="claude-opus-5-5")
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--backend", choices=["api", "cli"], default="api")
     args = ap.parse_args()
+    judge = classify_cli if args.backend == "cli" else classify
 
     RESULTS.mkdir(exist_ok=True)
     out = RESULTS / f"preds_{args.model}.jsonl"
@@ -64,8 +84,8 @@ def main():
     def run(post):
         # only the text goes to the model, never the id (it leaks the label)
         try:
-            return {"id": post["id"], **classify(args.model, post["text"])}
-        except anthropic.APIError as e:
+            return {"id": post["id"], **judge(args.model, post["text"])}
+        except (anthropic.APIError, RuntimeError, ValueError, subprocess.TimeoutExpired) as e:
             print(f"{post['id']}: {e}")
             return None
 
